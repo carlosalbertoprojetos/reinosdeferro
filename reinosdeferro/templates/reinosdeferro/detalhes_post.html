@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Detalhes
+{% endblock title %}
+
+{% block header %}
+
+    <!-- cabeçalho dinâmico se não for adicionado uma imagem ao post uma padrão será utilizada-->
+    {% if object.imagem %}
+    <header class="masthead" style="background-image: url({{ object.imagem.url }})">
+    {% else %}
+    <header class="masthead" style="background-image: url(/static/img/home.jpg)">
+    {% endif %}  
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                <h1>{{ object.titulo }}</h1>
+                </div>
+            </div>
+        </div>
+    </div> 
+    </header>
+
+{% endblock header %}
+
+{% block content %}
+    <div class="post-entry">
+        <h2>{{ object.titulo }}</h2>
+        <p>{{ object.conteudo | safe}}</p>
+    </div>
+
+    <!-- verificação de login do usuário -->
+    <!-- os botões de Editar e Deletar serão exibidos apenas se o autor estivar logado -->
+    {% if request.user.is_authenticated %}
+        <!-- somente o autor poderá editar e/ou deletar o post -->
+        {% if request.user == post.autor %}
+        <div class="card">
+            <div class="card-body">
+                <a href="{{ post.get_absolute_url_Editar }}" class='btn btn-primary'>Editar</a>
+                <a href="{% url 'deletar_post' object.pk %}" class='btn btn-danger'>Deletar</a>
+            </div>  
+        </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
+

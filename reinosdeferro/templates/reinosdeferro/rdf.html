@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+REINOS DE FERRO
+{% endblock title %}
+
+{% block header %}
+    <header class="masthead" style="background-image: url(/static/img/home.jpg)">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h1>Reinos de Ferro</h1>
+                        <span class="subheading" style="font: weight 300">Uma aventura em busca de glória e fortuna nas terras do Immoren</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+
+    {% for post in object_list %}
+        <div class="post-preview">
+            <a href="{{ post.get_absolute_url }}">
+                <h2 class="post-title">
+                    {{ post.titulo }}
+                </h2>
+                <h3 class="post-subtitle">
+                    {{ post.conteudo|safe|truncatechars:"200" }}
+                </h3>
+            </a>
+            <p class="post-meta">Postado por
+                <a href="#">{{ post.autor }}</a>
+                em {{ post.publicado }}
+        </p>
+        </div>
+        <hr>
+    {% endfor %}
+    <div class="clearfix">
+        <a class="btn btn-primary float-right" href="#">Postagens antigas &rarr;</a>
+    </div>
+{% endblock content %}
+
+
+    <div class="post-entry">
+        <h2><a href="{{ post.get_absolute_url }}">{{ post.titulo }}</a></h2>
+        <p>{{ post.conteudo }}</p>
+    </div>
+
